@@ -49,7 +49,6 @@ def plot_data(dataset, feature1, feature2, class1, class2, W, bias):
 def Perc_ALG(dataset, feature1, feature2, class1, class2, l_rate, epochs, bias):
     epochs=int(epochs)
     l_rate=float(l_rate)
-    nomClasses = 2
     if (class1 == 'C1' and class2 == 'C2') or (class2 == 'C1' and class1 == 'C2'):
         data1 = dataset.iloc[0:50,:]
         data2=dataset.iloc[50:100,:]
@@ -103,7 +102,6 @@ def Perc_ALG(dataset, feature1, feature2, class1, class2, l_rate, epochs, bias):
     for i in range(ytst.shape[0]):
         if ytst[i] != ypred[i]:
             error+=1
-
             if ytst[i] == 1:
                 inCorrectC1 += 1
             else:
@@ -113,6 +111,7 @@ def Perc_ALG(dataset, feature1, feature2, class1, class2, l_rate, epochs, bias):
     confusionMatrix = [[correctC1, inCorrectC1], [correctC2, inCorrectC2]]
     accuracy = ((correctC1+correctC2)/40)*100
     print(confusionMatrix)
+    print("Error = ", error)
     print("Overall Accuracy = "+str(accuracy)+"%")
     return W, bias
 

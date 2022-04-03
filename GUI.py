@@ -7,9 +7,28 @@ path = 'IrisData.txt'
 dataset = Model.read_data("./" + path)
 
 master = Tk()
-master.geometry("750x500")
+master.geometry("500x250")
+master.configure(bg="#EEE")
 
 def Begin_Model(feat1, feat2, class1, class2, l_rate, epochs, bias):
+    if (feat1 == "X1" and feat2 == "X2") or (feat1 == "X2" and feat2 == "X1"):
+        feat1 = "X1"
+        feat2 = "X2"
+    elif (feat1 == "X1" and feat2 == "X3") or (feat1 == "X3" and feat2 == "X1"):
+        feat1 = "X1"
+        feat2 = "X3"
+    elif (feat1 == "X1" and feat2 == "X4") or (feat1 == "X4" and feat2 == "X1"):
+        feat1 = "X1"
+        feat2 = "X4"
+    elif (feat1 == "X2" and feat2 == "X3") or (feat1 == "X3" and feat2 == "X2"):
+        feat1 = "X2"
+        feat2 = "X3"
+    elif (feat1 == "X2" and feat2 == "X4") or (feat1 == "X4" and feat2 == "X2"):
+        feat1 = "X2"
+        feat2 = "X4"
+    elif (feat1 == "X3" and feat2 == "X4") or (feat1 == "X4" and feat2 == "X3"):
+        feat1 = "X3"
+        feat2 = "X4"
     W, bias = Model.Perc_ALG(dataset, feat1, feat2, class1, class2, l_rate, epochs, bias)
     Model.plot_data(dataset, feat1, feat2, class1, class2, W, bias)
 
@@ -20,6 +39,8 @@ string_feat2.set("X2")
 options_list_feat = ["X1", "X2", "X3", "X4"]
 options_menu1_feat = OptionMenu(master, string_feat1, *options_list_feat)
 options_menu2_feat = OptionMenu(master, string_feat2, *options_list_feat)
+options_menu1_feat.config(bg="gray")
+options_menu2_feat.config(bg="gray")
 options_menu1_feat.place(x=10, y=25)
 options_menu2_feat.place(x=130, y=25)
 
@@ -34,6 +55,8 @@ options_menu2_class_label = Label(text="Class 2")
 options_list_class = ["C1", "C2", "C3"]
 options_menu1_class = OptionMenu(master, string_class1, *options_list_class)
 options_menu2_class = OptionMenu(master, string_class2, *options_list_class)
+options_menu1_class.config(bg="gray")
+options_menu2_class.config(bg="gray")
 options_menu1_class.place(x=10, y=80)
 options_menu2_class.place(x=130, y=80)
 
@@ -43,9 +66,9 @@ options_menu1_class_label.place(x=10,y=60)
 options_menu2_class_label.place(x=130,y=60)
 
 learn_rate_label = Label(text= "Learning Rate")
-learn_rate = Text(master, height=1, width=15, bg="white")
+learn_rate = Text(master, height=1, width=15, bg="#BBB")
 epochs_nom_label = Label(text= "Number of Epochs")
-epochs_nom = Text(master, height=1, width=15, bg="white")
+epochs_nom = Text(master, height=1, width=15, bg="#BBB")
 
 learn_rate_label.place(x=230, y=10)
 epochs_nom_label.place(x=230, y=60)
@@ -57,12 +80,12 @@ string_bias.set("Yes")
 add_bias_label = Label(text= "Add Bias?")
 options_list_bool = ["Yes", "No"]
 add_bias_options_menu = OptionMenu(master, string_bias, *options_list_bool)
+add_bias_options_menu.config(bg="gray")
 add_bias_label.place(x=10,y=120)
 add_bias_options_menu.place(x=10,y=140)
 
-
-begin_button = Button(master, height = 2,width = 10, text ="Begin",command = lambda:Begin_Model(string_feat1.get(), string_feat2.get(), string_class1.get(),
+begin_button = Button(master,bg="gray", height = 2,width = 10, text ="Begin",command = lambda:Begin_Model(string_feat1.get(), string_feat2.get(), string_class1.get(),
 string_class2.get(),learn_rate.get("1.0", 'end-1c'),epochs_nom.get("1.0", 'end-1c'),string_bias.get()))
-begin_button.place(x=10,y=300)
+begin_button.place(x=10,y=200)
 
 master.mainloop()
