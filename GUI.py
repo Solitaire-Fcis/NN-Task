@@ -10,16 +10,8 @@ master = Tk()
 master.geometry("750x500")
 
 def Begin_Model(feat1, feat2, class1, class2, l_rate, epochs, bias):
-    Model.Perc_ALG(dataset, feat1, feat2, class1, class2, l_rate, epochs, bias)
-
-def select_and_plot_data(feat2, class1, class2):
-    feat1 = string_feat1.get()
-    feat2 = string_feat2.get()
-    class1 = string_class1.get()
-    class2 = string_class2.get()
-    Model.plot_data(dataset, feat1, feat2, class1, class2)
-    Model.Perc_ALG(dataset, feat1, feat2, class1, class2)
-
+    W, bias = Model.Perc_ALG(dataset, feat1, feat2, class1, class2, l_rate, epochs, bias)
+    Model.plot_data(dataset, feat1, feat2, class1, class2, W, bias)
 
 string_feat1 = StringVar(master)
 string_feat1.set("X1")
