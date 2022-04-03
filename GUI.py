@@ -10,6 +10,7 @@ master = Tk()
 master.geometry("500x250")
 master.configure(bg="#EEE")
 
+# Begin Modelling 
 def Begin_Model(feat1, feat2, class1, class2, l_rate, epochs, bias):
     if (feat1 == "X1" and feat2 == "X2") or (feat1 == "X2" and feat2 == "X1"):
         feat1 = "X1"

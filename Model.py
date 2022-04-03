@@ -3,6 +3,8 @@ from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
+
+# Iris Dataset Retrieval
 def read_data(path):
     content = pd.read_csv(path)
     content.to_csv()
@@ -11,7 +13,7 @@ def read_data(path):
     content["Class"] = lbl.transform(list(content["Class"].values))
     return content
 
-
+# Plotting Data After Training and Testing
 def plot_data(dataset, feature1, feature2, class1, class2, W, bias):
     if class1 == 'C1' and class2 == 'C2' or class2 == 'C1' and class1 == 'C2':
         data1=dataset.iloc[:50,:]
@@ -46,9 +48,12 @@ def plot_data(dataset, feature1, feature2, class1, class2, W, bias):
     plt.legend()
     plt.show()
 
+# Perceptron Algorithm Model
 def Perc_ALG(dataset, feature1, feature2, class1, class2, l_rate, epochs, bias):
     epochs=int(epochs)
     l_rate=float(l_rate)
+
+    # Dataset Splitting Training/Testing
     if (class1 == 'C1' and class2 == 'C2') or (class2 == 'C1' and class1 == 'C2'):
         data1 = dataset.iloc[0:50,:]
         data2=dataset.iloc[50:100,:]
@@ -87,10 +92,14 @@ def Perc_ALG(dataset, feature1, feature2, class1, class2, l_rate, epochs, bias):
         xtr=np.insert(xtr, 0, np.ones([1, 1]),axis=1)
         xtst=np.insert(xtst, 0, np.ones([1, 1]),axis=1)
     ypred=np.array(int)
+    
+    # Training Start
     W=intialize(bias)
     xtr=np.array(xtr)
     ytr=np.array(ytr)
     W=nn_model(xtr,ytr,W,epochs,l_rate)
+
+    # Testing on Weights Retrieved from NN_Model
     xtst=np.array(xtst)
     for row in range(xtst.shape[0]):
          Z,A=forward(np.expand_dims(xtst[row],axis=1),W)
@@ -110,11 +119,14 @@ def Perc_ALG(dataset, feature1, feature2, class1, class2, l_rate, epochs, bias):
     correctC2 = 20 - inCorrectC2
     confusionMatrix = [[correctC1, inCorrectC1], [correctC2, inCorrectC2]]
     accuracy = ((correctC1+correctC2)/40)*100
+
+    # Confusion Matrix and Accuracy
     print(confusionMatrix)
     print("Error = ", error)
     print("Overall Accuracy = "+str(accuracy)+"%")
     return W, bias
 
+# Signum Activation Function
 def signum(Z):
     if Z[0][0]==0:
         return 0
@@ -123,17 +135,21 @@ def signum(Z):
     else:
         return 1
 
+# Initialization of Weights
 def intialize(bias):
     if bias=='No':
        W = np.random.rand(2, 1)
     else:
         W = np.random.rand(3, 1)
     return W
+
+# Evaluation of Sample(i)
 def forward (X,W):
     Z=np.dot(W.T,X)
     A=signum(Z)
     return Z,A
 
+# Neural Network Model Algorithm
 def nn_model(X,Y,W,num_of_iterations,learning_rate):
     for i in range(num_of_iterations):
         for row in range(X.shape[0]):
