@@ -246,12 +246,13 @@ def adaline_algo(dataset, feature1, feature2, class1, class2, l_rate, epochs, bi
     return W, bias
 
 
+# Neural Network Model Algorithm Adaline
 def nn_model_adaline(X, Y, W, num_of_iterations, learning_rate, threshold):
     for i in range(num_of_iterations):
         prediction = np.empty(Y.shape[0])
         for row in range(X.shape[0]):
             Z, A = forward(np.expand_dims(X[row], axis=1), W)
-            prediction[i]=A
+            prediction[i] = A
             if A != Y[row]:
                 error = Y[row] - A
                 W = W + learning_rate * error * np.expand_dims(X[row], axis=1)
@@ -259,3 +260,9 @@ def nn_model_adaline(X, Y, W, num_of_iterations, learning_rate, threshold):
         if MSE < threshold:
             break
     return W
+
+
+# Back Propagation Model
+def backPropagation_algo(options_list_features, options_list_classes, l_rate, epochs, bias,
+                         hidden_layers, neurons, choosenFunction):
+    # Write Code Here
