@@ -6,9 +6,24 @@ import Model
 path = 'IrisData.txt'
 dataset = Model.read_data("./" + path)
 
+# Read bonus from file
+# bonus_datasetTrain_path = 'mnist_train.csv'
+# bonus_dataset_train = Model.read_data('./' + bonus_datasetTrain_path)
+# bonus_datasetTest_path = 'mnist_test.csv'
+# bonus_dataset_test = Model.read_data('./' + bonus_datasetTest_path)
+
 master = Tk()
-master.geometry("600x250")
+master.geometry("1000x250")
 master.configure(bg="#EEE")
+
+neurons_values = []
+
+
+def return_values(textt):
+    for i in range(len(textt)):
+        neurons_values.append(textt[i].get("1.0", "end-1c"))
+    Done_text = Label(text="Values returned successfully")
+    Done_text.place(x=470, y=60)
 
 
 # Begin Perceptron Model
@@ -60,11 +75,29 @@ def Begin_Model_Adaline(feat1, feat2, class1, class2, l_rate, epochs, bias, thre
 
 
 # Begin Back_Propagation Model
-def Begin_Model_Back_Propagation(options_list_features, options_list_classes, l_rate, epochs, bias,
+def Begin_Model_Back_Propagation(l_rate, epochs, bias,
                                  hidden_layers, neurons, choosenFunction):
-    W, bias = Model.backPropagation_algo(dataset, options_list_features, options_list_classes, l_rate, epochs, bias,
+    W, bias = Model.backPropagation_algo(dataset, l_rate, epochs, bias,
                                          hidden_layers, neurons, choosenFunction)
     # Model.plot_data(dataset, feat1, feat2, class1, class2, W, bias)
+
+
+def generate_neurons(neurons):
+    neurons_int = int(neurons)
+    X = 650
+    Y = 30
+    ls = []
+    for i in range(neurons_int):
+        neurons_input = Text(master, height=1, width=15, bg="#BBB")
+        neurons_input.place(x=X, y=Y)
+        ls.append(neurons_input)
+        Y += 30
+        if i % 2 != 0:
+            X += 200
+            Y = 30
+    return_button = Button(master, bg="gray", height=1, width=6, text="Return",
+                           command=lambda: return_values(ls))
+    return_button.place(x=400, y=60)
 
 
 # Function options menu for BP model
@@ -123,19 +156,17 @@ threshold = Text(master, height=1, width=15, bg="#BBB")
 hiddenLayers_label = Label(text="Number of Hidden Layers")
 hiddenLayers = Text(master, height=1, width=15, bg="#BBB")
 neurons_label = Label(text="Number of Neurons/Hidden Layer")
-neurons = Text(master, height=1, width=15, bg="#BBB")
 
 # Text placements and their labels
 learn_rate_label.place(x=230, y=10)
 epochs_nom_label.place(x=230, y=60)
 threshold_label.place(x=230, y=110)
 hiddenLayers_label.place(x=400, y=10)
-neurons_label.place(x=400, y=60)
+# neurons_label.place(x=400, y=60)
 learn_rate.place(x=230, y=30)
 epochs_nom.place(x=230, y=85)
 threshold.place(x=230, y=140)
 hiddenLayers.place(x=400, y=30)
-neurons.place(x=400, y=85)
 
 # Add bias or not options menu
 string_bias = StringVar(master)
@@ -163,17 +194,26 @@ begin_button_Adaline = Button(master, bg="gray", height=2, width=14, text="Begin
                                                                   epochs_nom.get("1.0", 'end-1c'), string_bias.get(),
                                                                   threshold.get("1.0", 'end-1c')))
 begin_button_BackPropagation = Button(master, bg="gray", height=2, width=18, text="Begin Back Propagation",
-                                      command=lambda: Begin_Model_Back_Propagation(options_list_feat,
-                                                                                   options_list_class,
-                                                                                   learn_rate.get("1.0", 'end-1c'),
-                                                                                   epochs_nom.get("1.0", 'end-1c'),
-                                                                                   string_bias.get(),
-                                                                                   hiddenLayers.get("1.0", "end-1c"),
-                                                                                   neurons.get("1.0", "end-1c"),
-                                                                                   string_function.get()))
+                                      command=lambda: Begin_Model_Back_Propagation(
+                                          learn_rate.get("1.0", 'end-1c'),
+                                          epochs_nom.get("1.0", 'end-1c'),
+                                          string_bias.get(),
+                                          hiddenLayers.get("1.0", "end-1c"),
+                                          neurons_values,
+                                          string_function.get()))
+begin_button_bonus = Button(master, bg="gray", height=2, width=18, text="Begin Bonus",
+                            command=lambda: Model.Bonus_algo(learn_rate.get("1.0", 'end-1c'),
+                                                             epochs_nom.get("1.0", 'end-1c'),
+                                                             string_bias.get(),
+                                                             hiddenLayers.get("1.0", "end-1c"),
+                                                             neurons_values,
+                                                             string_function.get()))
+generate_input_boxes = Button(master, bg="gray", height=1, width=6, text="Generate",
+                              command=lambda: generate_neurons(hiddenLayers.get("1.0", "end-1c")))
 # Buttons placements
 begin_button_perceptron.place(x=10, y=200)
 begin_button_Adaline.place(x=130, y=200)
 begin_button_BackPropagation.place(x=250, y=200)
-
+begin_button_bonus.place(x=400, y=200)
+generate_input_boxes.place(x=524, y=27)
 master.mainloop()

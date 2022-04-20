@@ -261,8 +261,14 @@ def nn_model_adaline(X, Y, W, num_of_iterations, learning_rate, threshold):
             break
     return W
 
+    # Back Propagation Model
 
-# Back Propagation Model
-def backPropagation_algo(options_list_features, options_list_classes, l_rate, epochs, bias,
-                         hidden_layers, neurons, choosenFunction):
-    # Write Code Here
+
+def backPropagation_algo(dataset,l_rate, epochs, bias,hidden_layers, neurons, choosenFunction):
+    # Algo code here
+    return
+
+
+def Bonus_algo(bonus_dataset,l_rate, epochs, bias, hidden_layers, neurons, choosenFunction):
+    # bonus code here
+    return
