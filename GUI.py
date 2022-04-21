@@ -79,6 +79,7 @@ def Begin_Model_Back_Propagation(l_rate, epochs, bias,
                                  hidden_layers, neurons, choosenFunction):
     W, bias = Model.backPropagation_algo(dataset, l_rate, epochs, bias,
                                          hidden_layers, neurons, choosenFunction)
+
     # Model.plot_data(dataset, feat1, feat2, class1, class2, W, bias)
 
 
